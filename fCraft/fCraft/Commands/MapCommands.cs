@@ -848,6 +848,7 @@ namespace fCraft {
             }
 
             byte bmtmp = player.world.blockFlag[BlockAddr];
+            if (BlockAddr < 0 || BlockAddr > 49) { player.Message("Incorrect parameter!"); return; }
             player.world.blockFlag[BlockAddr] = Convert.ToByte((bmtmp & 1) | (BlockMode & 254));
             player.Message("Block '" + blockpar + "' has been modified.");
         }
@@ -867,6 +868,7 @@ namespace fCraft {
                 try { BlockAddr = (int)Map.GetBlockByName(blockpar); }
                 catch { player.Message("Incorrect parameter!"); return; }
             }
+            if (BlockAddr < 0 || BlockAddr > 49) { player.Message("Incorrect parameter!"); return; }
             player.world.blockFlag[BlockAddr] &= 254;
             player.Message("Block '" + blockpar + "' is now un-hpysicsized!");
         }
@@ -881,6 +883,7 @@ namespace fCraft {
                 try { BlockAddr = (int)Map.GetBlockByName(blockpar); }
                 catch { player.Message("Incorrect parameter!"); return; }
             }
+            if (BlockAddr < 0 || BlockAddr > 49) { player.Message("Incorrect parameter!"); return; }
             if ((player.world.blockFlag[BlockAddr] & 1) > 0)
             {
                 player.Message("Block '" + blockpar + "' is hpysicsized.");
