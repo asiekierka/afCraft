@@ -33,3 +33,12 @@ ccc - slippiness chance: 000 - 1/8, 111 - 8/8
 d - slippiness (like water, which does 1/96 chance): 0 - off, 1 - on
 e - finite mode on/off (changed by phyadd/phyrem, phymode does not touch it)
 
+ItemEntities (requires PlaceItemEntity permission):
+/ieadd [itementity's name] (params...) - Places ItemEntities of a type/stops placing them, params are optional depending on the ItemEntity.
+/ierem - Removes/stops removing ItemEntities by placing/removing blocks where they are.
+
+ItemEntities:
+
+WaterGen - generates water at the top of self
+LavaGen - generates lava at the top of self
+BlockGen [block ID/name] - generates a block at the top of self

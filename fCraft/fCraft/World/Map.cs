@@ -996,7 +996,7 @@ namespace fCraft {
                 case 3:
                     byte i = 255;
                     try { i = Convert.ToByte(ietp[0]); }
-                    catch { return false; }
+                    catch { try { i = (byte)GetBlockByName(ietp[0]); } catch { return false; } }
                     if (i > 0 && i <= 49)
                         ie.SetByte(0, i);
                     else return false;
