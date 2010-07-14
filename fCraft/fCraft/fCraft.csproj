@@ -116,6 +116,7 @@
     <Compile Include="World\Block.cs" />
     <Compile Include="World\BlockUpdate.cs" />
     <Compile Include="World\EventHandlers.cs" />
+    <Compile Include="World\ItemEntity.cs" />
     <Compile Include="World\Map.cs" />
     <Compile Include="World\MapGenerator.cs" />
     <Compile Include="World\World.cs" />
