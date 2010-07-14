@@ -8,7 +8,8 @@ namespace fCraft {
         Delete,
 
         PlaceGrass,
-        PlaceWater, // includes placing water blocks and changing water sim parameters
+        PlaceWater, // includes placing water blocks
+                    // changing water sim parameters is in ControlPhysics
         PlaceLava,  // same as above, but with lava
         PlaceAdmincrete,  // build admincrete
         DeleteAdmincrete, // delete admincrete

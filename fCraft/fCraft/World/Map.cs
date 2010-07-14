@@ -730,6 +730,9 @@ namespace fCraft {
                 if (world.blockFlag == null) { world.blockFlag = new byte[50]; }
             }
             #endregion
+            // just needed
+            world.blockFlag[8] = 0;
+            world.blockFlag[10] = 0;
             for (int iy = height - 1; iy >= 0; iy--)
             {
                 for (int iz = widthY - 1; iz >= 0; iz--)
@@ -836,12 +839,13 @@ namespace fCraft {
                                     if (tv != 0 && tv != 18 && tv != 20) QueueUpdate(new BlockUpdate(null, ix, iz, iy, 3));
                                     break;
                                 #endregion
+                            }
                                 #region LogiProc - finite physics
-                                default: if ((world.blockFlag[ib]&1) == 1)
+                                if ((world.blockFlag[ib]&1) == 1)
                                     {
                                         if (PlaceFPBlock(ix,iz,iy,ix,iz,iy-1,ib))
                                         {
-                                            break;
+
                                         }
                                         else
                                         {
@@ -859,19 +863,16 @@ namespace fCraft {
                                             {
                                                 if (PlaceFPBlock(ix, iz, iy, ix + xstep, iz + ystep, iy - 1, ib))
                                                 {
-                                                    break;
+
                                                 }
                                                 else if (((world.blockFlag[ib] & 2) > 0) && (rand.Next(0, 31) < ((world.blockFlag[ib] & 28) + 3)))
                                                 {
                                                     PlaceFPBlock(ix, iz, iy, ix + xstep, iz + ystep, iy, ib);
-                                                    break;
                                                 }
                                             }
                                         }
                                     }
-                                    break;
                                 #endregion
-                            }
                         }
                     }
                 }
