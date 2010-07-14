@@ -326,7 +326,7 @@ namespace fCraft {
 
                 case MessageType.PrivateChat:
                     if( CheckChatSpam() ) return;
-                    if (!Can(Permissions.Chat)) return;
+                    if (!Can(Permissions.PrivateChat)) return;
                     string otherPlayerName = message.Substring( 1, message.IndexOf( ' ' ) - 1 );
                     Player otherPlayer = Server.FindPlayer( otherPlayerName );
                     if( otherPlayer != null ) {

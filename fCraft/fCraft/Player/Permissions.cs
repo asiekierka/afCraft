@@ -3,6 +3,7 @@
 namespace fCraft {
     public enum Permissions {
         Chat,
+        PrivateChat,
         Build,
         Delete,
 
@@ -21,7 +22,7 @@ namespace fCraft {
         BanIP,
         BanAll,
         SeeLowerClassChat,
-
+       
         Promote,
         Demote,
         Hide,         // go invisible!
