@@ -863,6 +863,7 @@ namespace fCraft {
                                                 else if (((world.blockFlag[ib] & 2) > 0) && (rand.Next(0, 31) < ((world.blockFlag[ib] & 28) + 3)))
                                                 {
                                                     PlaceFPBlock(ix, iz, iy, ix + xstep, iz + ystep, iy, ib);
+                                                    break;
                                                 }
                                             }
                                         }
