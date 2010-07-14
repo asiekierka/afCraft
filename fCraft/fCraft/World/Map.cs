@@ -668,6 +668,24 @@ namespace fCraft {
         }
         #endregion
         #region Water/sponge support
+        internal bool PlaceFPWBlock(int ox, int oz, int oy, int ix, int iz, int iy, byte it)
+        {
+            // TODO: make it proper and faster
+            for (int sx = -2; sx < 3; sx++)
+            {
+                for (int sz = -2; sz < 3; sz++)
+                {
+                    for (int sy = -2; sy < 3; sy++)
+                    {
+                        if (GetBlockA(ix + sx, iz + sz, iy + sy) == 19)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return PlaceFPBlock(ox, oz, oy, ix, iz, iy, it);
+        }
         internal bool PlaceWater(int ox, int oz, int oy)
         {
             byte ibb = GetBlockA(ox, oz, oy);
@@ -788,6 +806,37 @@ namespace fCraft {
                                                 if (PlaceWater(ix + 1, iz, iy) && CheckSpongeYZ(ix+3, iz, iy)) { QueueUpdate(new BlockUpdate(null, ix + 1, iz, iy, ib)); }
                                                 if (PlaceWater(ix, iz - 1, iy) && CheckSpongeXY(ix, iz-3, iy)) { QueueUpdate(new BlockUpdate(null, ix, iz - 1, iy, ib)); }
                                                 if (PlaceWater(ix, iz + 1, iy) && CheckSpongeXY(ix, iz+3, iy)) { QueueUpdate(new BlockUpdate(null, ix, iz + 1, iy, ib)); }
+                                            }
+                                            break;
+                                        case 2:
+                                            if (PlaceFPWBlock(ix, iz, iy, ix, iz, iy - 1, ib))
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                int xt = rand.Next(0, 255) % 4;
+                                                int xstep = 0;
+                                                int ystep = 0;
+                                                switch (xt)
+                                                {
+                                                    case 0: xstep = 0; ystep = -1; break;
+                                                    case 1: xstep = 1; ystep = 0; break;
+                                                    case 2: xstep = 0; ystep = 1; break;
+                                                    case 3: xstep = -1; ystep = 0; break;
+                                                }
+                                                if (GetBlockA(ix+xstep, iz+ystep, iy) == 0)
+                                                {
+                                                    if (PlaceFPWBlock(ix, iz, iy, ix + xstep, iz + ystep, iy - 1, ib))
+                                                    {
+                                                        break;
+                                                    }
+                                                    else if (rand.Next(0,63)==21)
+                                                    {
+                                                        PlaceFPWBlock(ix, iz, iy, ix + xstep, iz + ystep, iy, ib);
+                                                        break;
+                                                    }
+                                                }
                                             }
                                             break;
                                         default: break;

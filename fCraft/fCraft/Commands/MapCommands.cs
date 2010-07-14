@@ -906,7 +906,7 @@ namespace fCraft {
             {
                 player.Message("Incorrect parameter!"); return;
             }
-            if (BlockAddr < 2 && BlockAddr >= 0)
+            if (BlockAddr < 3 && BlockAddr >= 0)
             {
                 player.world.modeWater = BlockAddr;
                 switch (BlockAddr)
