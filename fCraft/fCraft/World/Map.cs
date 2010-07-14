@@ -21,6 +21,7 @@ namespace fCraft {
         object pqLock = new object();
         public int changesSinceSave, changesSinceBackup;
         Queue<BlockUpdate> postupdates = new Queue<BlockUpdate>();
+        List<ItemEntity> ietlist = new List<ItemEntity>();
 
         internal Map() { }
 
