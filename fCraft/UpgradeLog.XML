@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="fCraft">
+</Property><Property Name="Solution File" Value="D:\asies_branch\asiecraft-0.410-r94\fCraft\fCraft.sln">
+</Property><Property Name="Date" Value="13 lipca 2010">
+</Property><Property Name="Time" Value="15:46">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="fCraft.sln" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft.sln">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\fCraft.csproj" Description="Project file successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\fCraft.csproj">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Commands\DrawCommands.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Commands\DrawCommands.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Commands\MapCommands.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Commands\MapCommands.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Commands\BlockCommands.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Commands\BlockCommands.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Commands\Commands.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Commands\Commands.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Commands\InfoCommands.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Commands\InfoCommands.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Commands\StandardCommands.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Commands\StandardCommands.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\MCC\IConverter.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\MCC\IConverter.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\MCC\MapDAT.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\MCC\MapDAT.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\MCC\MapFCMv2.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\MCC\MapFCMv2.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\MCC\MapFormats.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\MCC\MapFormats.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\MCC\MapMCSharp.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\MCC\MapMCSharp.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\MCC\MapMinerCPP.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\MCC\MapMinerCPP.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\MCC\MapNBT.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\MCC\MapNBT.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\MCC\MapUtility.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\MCC\MapUtility.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\MCC\NBTag.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\MCC\NBTag.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Network\IRCComm.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Network\IRCComm.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Network\IPBanList.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Network\IPBanList.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Network\IRCBot.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Network\IRCBot.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Utils\Updater.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Utils\Updater.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Player\ClassList.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Player\ClassList.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Player\Permissions.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Player\Permissions.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Utils\Color.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Utils\Color.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Network\Heartbeat.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Network\Heartbeat.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Server.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Server.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Utils\Config.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Utils\Config.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Utils\Logger.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Utils\Logger.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Network\PacketWriter.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Network\PacketWriter.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Network\Packet.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Network\Packet.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Network\Session.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Network\Session.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Commands\Command.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Commands\Command.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Player\PlayerClass.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Player\PlayerClass.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Player\Player.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Player\Player.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Player\PlayerDB.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Player\PlayerDB.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Player\PlayerInfo.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Player\PlayerInfo.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Utils\StringTree.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Utils\StringTree.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Utils\Position.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Utils\Position.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\Utils\Tasks.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\Utils\Tasks.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\World\Block.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\World\Block.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\World\BlockUpdate.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\World\BlockUpdate.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\World\EventHandlers.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\World\EventHandlers.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\World\Map.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\World\Map.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\World\MapGenerator.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\World\MapGenerator.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\World\World.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\World\World.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\World\Zone.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\World\Zone.cs">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\app.config" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraft\app.config">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\fCraft.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="fCraft" Source="fCraft\fCraft.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\fCraftUI.csproj" Description="Project file successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUI\fCraftUI.csproj">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\Program.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUI\Program.cs">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUI\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\MainForm.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUI\MainForm.cs">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\MainForm.Designer.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUI\MainForm.Designer.cs">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\UpdateWindow.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUI\UpdateWindow.cs">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\UpdateWindow.Designer.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUI\UpdateWindow.Designer.cs">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\app.config" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUI\app.config">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\f2k.ico" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUI\f2k.ico">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\MainForm.resx" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUI\MainForm.resx">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\UpdateWindow.resx" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUI\UpdateWindow.resx">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\fCraftUI.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="fCraftUI" Source="fCraftUI\fCraftUI.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\ConfigTool.csproj" Description="Project file successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\ConfigTool.csproj">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\ColorPicker.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\ColorPicker.cs">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\ColorPicker.Designer.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\ColorPicker.Designer.cs">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\ConfigUI.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\ConfigUI.cs">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\ConfigUI.Designer.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\ConfigUI.Designer.cs">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\Program.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\Program.cs">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\TextEditorPopup.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\TextEditorPopup.cs">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\TextEditorPopup.Designer.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\TextEditorPopup.Designer.cs">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\ConfigUI.Adapter.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\ConfigUI.Adapter.cs">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\app.config" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\app.config">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\fcraft_config.ico" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\fcraft_config.ico">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\ColorPicker.resx" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\ColorPicker.resx">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\ConfigUI.resx" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\ConfigUI.resx">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\TextEditorPopup.resx" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\ConfigTool\TextEditorPopup.resx">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\ConfigTool.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="ConfigTool" Source="ConfigTool\ConfigTool.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="fCraftUpdater" Source="fCraftUpdater\fCraftUpdater.csproj" Description="Project file successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUpdater\fCraftUpdater.csproj">
+</Event><Event ErrorLevel="0" Project="fCraftUpdater" Source="fCraftUpdater\Program.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUpdater\Program.cs">
+</Event><Event ErrorLevel="0" Project="fCraftUpdater" Source="fCraftUpdater\Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUpdater\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="fCraftUpdater" Source="fCraftUpdater\Properties\Resources.Designer.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUpdater\Properties\Resources.Designer.cs">
+</Event><Event ErrorLevel="0" Project="fCraftUpdater" Source="fCraftUpdater\app.config" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUpdater\app.config">
+</Event><Event ErrorLevel="0" Project="fCraftUpdater" Source="fCraftUpdater\Resources\Extractor.exe" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUpdater\Resources\Extractor.exe">
+</Event><Event ErrorLevel="0" Project="fCraftUpdater" Source="fCraftUpdater\fcraft_updater.ico" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUpdater\fcraft_updater.ico">
+</Event><Event ErrorLevel="0" Project="fCraftUpdater" Source="fCraftUpdater\Properties\Resources.resx" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftUpdater\Properties\Resources.resx">
+</Event><Event ErrorLevel="0" Project="fCraftUpdater" Source="fCraftUpdater\fCraftUpdater.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="fCraftUpdater" Source="fCraftUpdater\fCraftUpdater.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="fCraftConsole" Source="fCraftConsole\fCraftConsole.csproj" Description="Project file successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftConsole\fCraftConsole.csproj">
+</Event><Event ErrorLevel="0" Project="fCraftConsole" Source="fCraftConsole\Program.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftConsole\Program.cs">
+</Event><Event ErrorLevel="0" Project="fCraftConsole" Source="fCraftConsole\Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftConsole\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="fCraftConsole" Source="fCraftConsole\app.config" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftConsole\app.config">
+</Event><Event ErrorLevel="0" Project="fCraftConsole" Source="fCraftConsole\fcraft_console.ico" Description="File successfully backed up as D:\asies_branch\asiecraft-0.410-r94_old\Backup\fCraftConsole\fcraft_console.ico">
+</Event><Event ErrorLevel="0" Project="fCraftConsole" Source="fCraftConsole\fCraftConsole.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="fCraftConsole" Source="fCraftConsole\fCraftConsole.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="fCraft.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="fCraft.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="fCraft" Source="fCraft\app.config" Description="File converted successfully. All &lt;supportedRuntime&gt; and &lt;requiredRuntime&gt; tags were removed to enable the project to build and run with Visual Studio 2005.">
+</Event><Event ErrorLevel="3" Project="fCraft" Source="fCraft\app.config" Description="Converted">
+</Event><Event ErrorLevel="0" Project="fCraftUI" Source="fCraftUI\app.config" Description="File converted successfully. All &lt;supportedRuntime&gt; and &lt;requiredRuntime&gt; tags were removed to enable the project to build and run with Visual Studio 2005.">
+</Event><Event ErrorLevel="3" Project="fCraftUI" Source="fCraftUI\app.config" Description="Converted">
+</Event><Event ErrorLevel="0" Project="ConfigTool" Source="ConfigTool\app.config" Description="File converted successfully. All &lt;supportedRuntime&gt; and &lt;requiredRuntime&gt; tags were removed to enable the project to build and run with Visual Studio 2005.">
+</Event><Event ErrorLevel="3" Project="ConfigTool" Source="ConfigTool\app.config" Description="Converted">
+</Event><Event ErrorLevel="0" Project="fCraftUpdater" Source="fCraftUpdater\app.config" Description="File converted successfully. All &lt;supportedRuntime&gt; and &lt;requiredRuntime&gt; tags were removed to enable the project to build and run with Visual Studio 2005.">
+</Event><Event ErrorLevel="3" Project="fCraftUpdater" Source="fCraftUpdater\app.config" Description="Converted">
+</Event><Event ErrorLevel="0" Project="fCraftConsole" Source="fCraftConsole\app.config" Description="File converted successfully. All &lt;supportedRuntime&gt; and &lt;requiredRuntime&gt; tags were removed to enable the project to build and run with Visual Studio 2005.">
+</Event><Event ErrorLevel="3" Project="fCraftConsole" Source="fCraftConsole\app.config" Description="Converted">
+</Event></UpgradeLog>

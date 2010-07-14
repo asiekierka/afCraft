@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svnroot/fcraft/!svn/ver/94/fCraft/fCraft/Network
+END
+HeartBeat.cs
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/fcraft/!svn/ver/94/fCraft/fCraft/Network/HeartBeat.cs
+END
+IRCBot.cs
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/fcraft/!svn/ver/94/fCraft/fCraft/Network/IRCBot.cs
+END
+Session.cs
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/fcraft/!svn/ver/94/fCraft/fCraft/Network/Session.cs
+END
+PacketWriter.cs
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/fcraft/!svn/ver/94/fCraft/fCraft/Network/PacketWriter.cs
+END
+IPBanList.cs
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/fcraft/!svn/ver/94/fCraft/fCraft/Network/IPBanList.cs
+END
+Packet.cs
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/fcraft/!svn/ver/1/fCraft/fCraft/Network/Packet.cs
+END
+IRCComm.cs
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/fcraft/!svn/ver/94/fCraft/fCraft/Network/IRCComm.cs
+END

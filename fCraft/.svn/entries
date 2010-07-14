@@ -1,0 +1,77 @@
+10
+
+dir
+96
+https://fcraft.svn.sourceforge.net/svnroot/fcraft/fCraft
+https://fcraft.svn.sourceforge.net/svnroot/fcraft
+
+
+
+2010-07-13T13:34:14.204930Z
+96
+fragmer
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+361580da-8db9-4bc3-b993-010fc5d4b379
+
+fCraft.sln
+file
+
+
+
+
+2010-07-13T13:44:51.406250Z
+3228bed4bcda83c5415b81c49d11ad5d
+2010-05-02T12:04:59.194550Z
+1
+fragmer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2860
+
+ConfigTool
+dir
+
+fCraftUI
+dir
+
+fCraft
+dir
+
+fCraftConsole
+dir
+
+fCraftUpdater
+dir
+
