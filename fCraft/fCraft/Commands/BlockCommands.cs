@@ -11,7 +11,9 @@ namespace fCraft {
         Water,
         Hardened,
         RealWater,
-        RealLava
+        RealLava,
+        ItemEnt,
+        ItemEntRem
     }
 
     static class BlockCommands {
@@ -28,9 +30,72 @@ namespace fCraft {
             Commands.AddCommand( "h", Hardened, false );
             Commands.AddCommand("rwater", RealWater, false);
             Commands.AddCommand("rlava", RealLava, false);
+            Commands.AddCommand("ieadd", ItemEntAdd, false);
+            Commands.AddCommand("ierem", ItemEntRem, false);
         }
-
-
+        internal static void ItemEntRem(Player player, Command cmd)
+        {
+            if (player.ientmode == BlockPlacementMode.ItemEntRem)
+            {
+                player.ientmode = BlockPlacementMode.Normal;
+                player.Message("ItemEntity remove mode: OFF");
+            }
+            else if (player.Can(Permissions.PlaceItemEnt))
+            {
+                player.ientmode = BlockPlacementMode.ItemEntRem;
+                player.Message("ItemEntity remove mode: ON.");
+            }
+            else
+            {
+                player.NoAccessMessage(Permissions.PlaceItemEnt);
+            }
+        }
+        internal static void ItemEntAdd(Player player, Command cmd)
+        {
+            string blockpar = cmd.Next();
+            ItemEntType IPar1 = ItemEntType.Null;
+            //byte IPar2 = 255;
+            try { IPar1 = (ItemEntType)Convert.ToInt32(blockpar); }
+            catch
+            {
+                try { IPar1 = Map.GetItemEntityByName(blockpar); }
+                catch { player.Message("Incorrect parameter 1!"); return; }
+            }
+            /*
+            blockpar = cmd.Next();
+            if (blockpar != "")
+            {
+                try { IPar2 = Convert.ToByte(blockpar); }
+                catch
+                {
+                    try { IPar2 = (byte)Map.GetBlockByName(blockpar); }
+                    catch { }
+                }
+            }
+            */
+            if (player.ientmode == BlockPlacementMode.ItemEnt)
+            {
+                player.ientmode = BlockPlacementMode.Normal;
+                player.Message("ItemEntity mode: OFF");
+            }
+            else if (player.Can(Permissions.PlaceItemEnt))
+            {
+                player.ientmode = BlockPlacementMode.ItemEnt;
+                player.Message("ItemEntity mode: ON. Your next blocks will be ItemEntities.");
+                player.ienttype = IPar1;
+                /*
+                if (IPar2 >= 0 && IPar2 <= 49)
+                {
+                    player.isIentBTDef = true;
+                    player.ientbt = IPar2;
+                }
+                */
+            }
+            else
+            {
+                player.NoAccessMessage(Permissions.PlaceItemEnt);
+            }
+        }
         internal static void Solid( Player player, Command cmd ) {
             if( player.mode == BlockPlacementMode.Solid ){
                 player.mode = BlockPlacementMode.Normal;

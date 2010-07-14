@@ -19,17 +19,17 @@ namespace fCraft
         public byte blocktype; // just so it is there
         public int x, y, h; // position of the entity
         public byte[] data;
-        static Dictionary<string, ItemEntType> ieNames = new Dictionary<string, ItemEntType>();
-        static Dictionary<int, byte> ieBTs = new Dictionary<int, byte>();
+        internal static Dictionary<string, ItemEntType> ieNames = new Dictionary<string, ItemEntType>();
+        public static Dictionary<int, byte> ieBTs = new Dictionary<int, byte>();
 
         #region Initalization
         internal void InitTables()
         {
             foreach( string block in Enum.GetNames( typeof( ItemEntType ) ) ) {
-                ieNames.Add( block.ToLower(), (ItemEntType)Enum.Parse( typeof( ItemEntType ), block ) );
+                if(!ieNames.ContainsKey(block.ToLower())) ieNames.Add( block.ToLower(), (ItemEntType)Enum.Parse( typeof( ItemEntType ), block ) );
             }
 
-            ieBTs[0] = 0;
+            ieBTs[0] = 255;
             ieBTs[1] = (byte)Block.Aqua;
             ieBTs[2] = (byte)Block.Orange;
 
@@ -37,7 +37,7 @@ namespace fCraft
             if(ietlen > 2)
                 for (int i = 3; i <= ietlen; i++)
                 {
-                    ieBTs[i] = 1;
+                    ieBTs[i] = 255;
                 }
         }
         public ItemEntity(int ax, int ay, int ah, int aty)
@@ -52,16 +52,39 @@ namespace fCraft
             InitTables();  // yes, i use Visual C# 2010 Express... don't ask. no, don't.
             blocktype = ieBTs[type];
         }
+        public ItemEntity(int dummy)
+        {
+            type = 0;
+            x = 0;
+            y = 0;
+            h = 0;
+            blocktype = 0;
+            data = new byte[128];
+            ietlen = 2;
+            InitTables();
+        }
         public ItemEntity(int ax, int ay, int ah, int aty, byte abt)
         {
             type = aty;
             x = ax;
             y = ay;
             h = ah;
-            blocktype = abt; //  DEVELOPERS WORLDWIDE REJOICE AS
+            blocktype = abt;      //  DEVELOPERS WORLDWIDE REJOICE AS
+            data = new byte[128]; // ASIEKIERKA REMOVES THE UGLY HACK!
+            ietlen = 2;
+            InitTables();
+        }
+        public ItemEntity(int ax, int ay, int ah, ItemEntType aty)
+        {
+            type = (int)aty;
+            x = ax;
+            y = ay;
+            h = ah;
+            blocktype = 0; // ugly hack because Visual C# 2010 Express is a fat Micro$ jerk
             data = new byte[128];
             ietlen = 2;
-            InitTables();    // ASIEKIERKA REMOVES THE UGLY HACK!
+            InitTables();  // yes, i use Visual C# 2010 Express... don't ask. no, don't.
+            blocktype = ieBTs[type];
         }
         #endregion
 
@@ -131,7 +154,7 @@ namespace fCraft
         #endregion
 
         #region Name handling stuff
-        internal static ItemEntType GetIEByName(string iet)
+        public ItemEntType GetIEByName(string iet)
         {
             return ieNames[iet.ToLower()];
         }

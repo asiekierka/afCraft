@@ -78,9 +78,9 @@ namespace fCraft {
                 switch( block ) {
                     case Block.Admincrete: permission = Permissions.PlaceAdmincrete; break;
                     case Block.Air: permission = Permissions.Delete; break;
-                    case Block.Water:
+                    case Block.Water: permission = Permissions.PlaceRealWater; break;
                     case Block.StillWater: permission = Permissions.PlaceWater; break;
-                    case Block.Lava:
+                    case Block.Lava: permission = Permissions.PlaceRealLava; break;
                     case Block.StillLava: permission = Permissions.PlaceLava; break;
                 }
 

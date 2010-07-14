@@ -21,7 +21,8 @@ namespace fCraft {
         object pqLock = new object();
         public int changesSinceSave, changesSinceBackup;
         Queue<BlockUpdate> postupdates = new Queue<BlockUpdate>();
-        List<ItemEntity> ietlist = new List<ItemEntity>();
+        public List<ItemEntity> ietlist = new List<ItemEntity>();
+        object ietlock = new object();
 
         internal Map() { }
 
@@ -506,6 +507,7 @@ namespace fCraft {
             if (updates.Count == 0 && world.isReadyForUnload == false)
             {
                 if ((world.logicOn == true) || (world.physicsOn == true)) LogiProc();
+                ProcessItemEntities();
             }
 
             if( updates.Count == 0 && world.isReadyForUnload ) {
@@ -972,6 +974,74 @@ namespace fCraft {
         }
         #endregion
 
+        #region ItemEntity handling
+
+        internal static ItemEntType GetItemEntityByName(string ien)
+        {
+            ItemEntity tmpie = new ItemEntity(1);
+            return tmpie.GetIEByName(ien);
+        }
+        public void AddItemEntity(ItemEntity ie)
+        {
+            lock (ietlock)
+            {
+                ietlist.Add(ie);
+            }
+            /*
+            if (ie.blocktype <= 49)
+            {
+                lock (queueLock)
+                {
+                    QueueUpdate(new BlockUpdate(null, ie.x, ie.y, ie.h, ie.blocktype));
+                }
+            }
+            */
+        }
+
+        public void ClearItemEntities()
+        {
+            lock (ietlock)
+            {
+                ietlist.Clear();
+            }
+        }
+
+        internal void ProcessItemEntities()
+        {
+            lock (ietlock)
+            {
+                foreach (ItemEntity pIEnt in ietlist)
+                {
+                    /*
+                    if (pIEnt.blocktype <= 49 && GetBlockA(pIEnt.x,pIEnt.y,pIEnt.h) != pIEnt.blocktype)
+                    {
+                        QueueUpdate(new BlockUpdate(null, pIEnt.x, pIEnt.y, pIEnt.h, pIEnt.blocktype));
+                    }
+                    */
+                    int ix = pIEnt.x;
+                    int iy = pIEnt.y;
+                    int ih = pIEnt.h;
+                    int it = pIEnt.type;
+                    switch (it)
+                    {
+                        case 0: break;
+                        case 1: if (GetBlockA(ix, iy, ih+1) == 0)
+                            {
+                                QueueUpdate(new BlockUpdate(null,ix, iy, ih+1,8));
+                            }
+                            break;
+                        case 2: if (GetBlockA(ix, iy, ih+1) == 0)
+                            {
+                                QueueUpdate(new BlockUpdate(null, ix, iy, ih+1, 10));
+                            }
+                            break;
+                        default: break;
+                    }
+                }
+            }
+        }
+
+        #endregion
         #region Backup
         public void SaveBackup( string sourceName, string targetName ) {
             if( changesSinceBackup == 0 && Config.GetBool( ConfigKey.BackupOnlyWhenChanged ) ) return;

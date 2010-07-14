@@ -14,6 +14,7 @@ namespace fCraft {
         PlaceAdmincrete,  // build admincrete
         DeleteAdmincrete, // delete admincrete
         PlaceHardenedBlocks, // Place all blocks as admincrete
+        PlaceItemEnt, // place item entities
         PlaceRealWater,
         PlaceRealLava,
 

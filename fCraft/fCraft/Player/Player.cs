@@ -26,6 +26,11 @@ namespace fCraft {
         internal DateTime idleTimer = DateTime.UtcNow;
         internal Block lastUsedBlockType;
 
+        internal BlockPlacementMode ientmode;
+        internal ItemEntType ienttype;
+        //public bool isIentBTDef;
+        //internal byte ientbt;
+
         const int maxRange = 6 * 32;
 
 
@@ -208,8 +213,25 @@ namespace fCraft {
 
             // if all is well, try placing it
             if( can ) {
+                ItemEntity[] ietpl = new ItemEntity[world.map.ietlist.Count+1];
+                world.map.ietlist.CopyTo(ietpl);
                 BlockUpdate blockUpdate;
                 if( type == Block.Stair && h > 0 && world.map.GetBlock( x, y, h - 1 ) == (byte)Block.Stair ) {
+                    if (ientmode == BlockPlacementMode.ItemEnt)
+                    {
+                        world.map.AddItemEntity(new ItemEntity(x, y, h-1, ienttype));
+                    }
+                    else if (ientmode == BlockPlacementMode.ItemEntRem)
+                    {
+                        foreach (ItemEntity pient in ietpl)
+                        {
+                            if (pient.x == x && pient.y == y && pient.h == h - 1)
+                            {
+                                world.map.ietlist.Remove(pient);
+                                Message("ItemEntity removed.");
+                            }
+                        }
+                    }
                     blockUpdate = new BlockUpdate( this, x, y, h - 1, (byte)Block.DoubleStair );
                     if( !world.FireChangedBlockEvent( ref blockUpdate ) ) {
                         SendTileNow( x, y, h );
@@ -219,6 +241,21 @@ namespace fCraft {
                     session.SendNow( PacketWriter.MakeSetBlock( x, y, h - 1, (byte)Block.DoubleStair ) );
                     session.SendNow( PacketWriter.MakeSetBlock( x, y, h, (byte)Block.Air ) );
                 } else {
+                    if (ientmode == BlockPlacementMode.ItemEnt)
+                    {
+                        world.map.AddItemEntity(new ItemEntity(x, y, h, ienttype));
+                    }
+                    else if (ientmode == BlockPlacementMode.ItemEntRem)
+                    {
+                        foreach (ItemEntity pient in ietpl)
+                        {
+                            if (pient.x == x && pient.y == y && pient.h == h)
+                            {
+                                world.map.ietlist.Remove(pient);
+                                Message("ItemEntity removed.");
+                            }
+                        }
+                    }
                     blockUpdate = new BlockUpdate( this, x, y, h, (byte)type );
                     if( !world.FireChangedBlockEvent( ref blockUpdate ) ) {
                         SendTileNow( x, y, h );
