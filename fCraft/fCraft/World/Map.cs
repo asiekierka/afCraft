@@ -559,6 +559,7 @@ namespace fCraft {
 
         #region Asiekierka's Block Modification Handler (ABloMoHa)
 
+        #region Utilities
         public byte GetBlockA(int x, int y, int h)
         {
             if (x < widthX && y < widthY && h < height && x >= 0 && y >= 0 && h >= 0)
@@ -572,7 +573,8 @@ namespace fCraft {
                 return blocks[Index(x, y, h)];
             return 255;
         }
-
+        #endregion
+        #region WireWorld utils
         internal int LogiScan(int ox, int oz, int oy, bool CheckSelf)
         {
             int oi = 0;
@@ -587,10 +589,12 @@ namespace fCraft {
             if (GetBlockA(ox + 1, oz + 1, oy) == 21) { oi++; }
             return oi;
         }
+        #endregion
 
         static Random rand = new Random();
         long LastLavaTime = -1;
 
+        #region Finite physics handlers
         internal bool FPIsNotBlocked(int ix, int iz, int iy, byte it)
         {
             if (GetBlockA(ix, iz, iy) == 0)
@@ -619,11 +623,11 @@ namespace fCraft {
             {
                 switch(world.modeWater)
                 {
-                    case 2:
+                    case 2: // finite water
                         QueueUpdate(new BlockUpdate(null, ix, iz, iy, it));
                         QueueUpdate(new BlockUpdate(null, ox, oz, oy, 8));
                         return true;
-                    default:
+                    default: // infinite water
                         if ((GetBlockA(ox - 1, oz, oy) == 8) || (GetBlockA(ox + 1, oz, oy) == 8) || (GetBlockA(ox, oz - 1, oy) == 8) || (GetBlockA(ox, oz + 1, oy) == 8))
                         {
                             QueueUpdate(new BlockUpdate(null, ix, iz, iy, it));
@@ -641,11 +645,11 @@ namespace fCraft {
             {
                 switch (world.modeWater)
                 {
-                    case 2:
+                    case 2: // finite lava
                         QueueUpdate(new BlockUpdate(null, ix, iz, iy, it));
                         QueueUpdate(new BlockUpdate(null, ox, oz, oy, 10));
                         return true;
-                    default:
+                    default: // infinite lava
                         if ((GetBlockA(ox - 1, oz, oy) == 10) || (GetBlockA(ox + 1, oz, oy) == 10) || (GetBlockA(ox, oz - 1, oy) == 10) || (GetBlockA(ox, oz + 1, oy) == 10))
                         {
                             QueueUpdate(new BlockUpdate(null, ix, iz, iy, it));
@@ -661,6 +665,8 @@ namespace fCraft {
             }
             return false;
         }
+        #endregion
+        #region Water/sponge support
         internal bool PlaceWater(int ox, int oz, int oy)
         {
             byte ibb = GetBlockA(ox, oz, oy);
@@ -709,18 +715,10 @@ namespace fCraft {
             }
             return true;
         }
+        #endregion
         public void LogiProc()
         {
-            /*
-            if (oldblocks == null)
-            {
-                oldblocks = new byte[widthX * widthY * height];
-                oldblocks.Initialize();
-            }
-            isReady = true;
-            Array.Copy(oldblocks, blocks, (widthX * widthY * height));
-            */
-            // Here we are.
+            #region LogiProc - lava delay
             Boolean tempPON = false;
             long tempPT = DateTime.UtcNow.Ticks / 100000;
             if (world.physicsOn == true)
@@ -730,6 +728,7 @@ namespace fCraft {
                 if (tempPT - LastLavaTime >= 110) { tempPON = true; LastLavaTime = tempPT; }
                 if (world.blockFlag == null) { world.blockFlag = new byte[50]; }
             }
+            #endregion
             for (int iy = height - 1; iy >= 0; iy--)
             {
                 for (int iz = widthY - 1; iz >= 0; iz--)
@@ -738,6 +737,7 @@ namespace fCraft {
                     {
                         // Now we go over each and every block.
                         byte ib = GetBlock(ix, iz, iy);
+                        #region LogiProc - WireWorld
                         if (world.logicOn == true) switch (ib)
                             {
                                 case 21: QueueUpdate(new BlockUpdate(null, ix, iz, iy, 34)); break;
@@ -753,10 +753,13 @@ namespace fCraft {
                                     break;
                                 default: break;
                             }
+                        #endregion
                         if ((world.physicsOn == true) && ((tempPON == true) || (ib != 10) || (world.blockFlag[ib] == 1)))
                         {
+                            byte tv = 255;
                             switch (ib)
                             {
+                                #region LogiProc - Water
                                 case 8:
                                     for (int sx = -2; sx < 3; sx++)
                                     {
@@ -786,7 +789,8 @@ namespace fCraft {
                                         default: break;
                                     }
                                     break;
-
+                                #endregion
+                                #region LogiProc - Lava
                                 case 10: // Wava!
                                     switch (world.modeWater)
                                     {
@@ -803,6 +807,8 @@ namespace fCraft {
                                         default: break;
                                     }
                                     break;
+                                #endregion
+                                #region LogiProc - Sponge
                                 case 19: // Sponges
                                     for (int sx = -2; sx < 3; sx++)
                                     {
@@ -818,6 +824,18 @@ namespace fCraft {
                                         }
                                     }
                                     break;
+                                #endregion
+                                #region LogiProc - Grass (lacking)
+                                case 3: // Dirt
+                                    tv = GetBlock(ix, iz, iy + 1);
+                                    if (tv == 0 || tv == 18 || tv == 20) QueueUpdate(new BlockUpdate(null, ix, iz, iy, 2));
+                                    break;
+                                case 2: // Grass
+                                    tv = GetBlock(ix, iz, iy + 1);
+                                    if (tv != 0 && tv != 18 && tv != 20) QueueUpdate(new BlockUpdate(null, ix, iz, iy, 3));
+                                    break;
+                                #endregion
+                                #region LogiProc - finite physics
                                 default: if ((world.blockFlag[ib]&1) == 1)
                                     {
                                         if (PlaceFPBlock(ix,iz,iy,ix,iz,iy-1,ib))
@@ -850,6 +868,7 @@ namespace fCraft {
                                         }
                                     }
                                     break;
+                                #endregion
                             }
                         }
                     }
