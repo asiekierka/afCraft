@@ -28,6 +28,8 @@ namespace fCraft {
 
         internal BlockPlacementMode ientmode;
         internal ItemEntType ienttype;
+        internal string[] ientp;
+        internal int ientpl;
         //public bool isIentBTDef;
         //internal byte ientbt;
 
@@ -219,7 +221,10 @@ namespace fCraft {
                 if( type == Block.Stair && h > 0 && world.map.GetBlock( x, y, h - 1 ) == (byte)Block.Stair ) {
                     if (ientmode == BlockPlacementMode.ItemEnt)
                     {
-                        world.map.AddItemEntity(new ItemEntity(x, y, h-1, ienttype));
+                        if (!world.map.AddItemEntity(new ItemEntity(x, y, h - 1, ienttype), ientp))
+                        {
+                            Message("Placing ItemEntity failed!");
+                        }
                     }
                     else if (ientmode == BlockPlacementMode.ItemEntRem)
                     {
@@ -243,7 +248,10 @@ namespace fCraft {
                 } else {
                     if (ientmode == BlockPlacementMode.ItemEnt)
                     {
-                        world.map.AddItemEntity(new ItemEntity(x, y, h, ienttype));
+                        if (!world.map.AddItemEntity(new ItemEntity(x, y, h, ienttype), ientp))
+                        {
+                            Message("Placing ItemEntity failed!");
+                        }
                     }
                     else if (ientmode == BlockPlacementMode.ItemEntRem)
                     {

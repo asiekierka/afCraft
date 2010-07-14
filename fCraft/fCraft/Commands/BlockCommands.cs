@@ -61,18 +61,17 @@ namespace fCraft {
                 try { IPar1 = Map.GetItemEntityByName(blockpar); }
                 catch { player.Message("Incorrect parameter 1!"); return; }
             }
-            /*
             blockpar = cmd.Next();
-            if (blockpar != "")
+            string[] tmpsa = new string[16];
+            int i = 0;
+            while (blockpar != "" && blockpar != null)
             {
-                try { IPar2 = Convert.ToByte(blockpar); }
-                catch
-                {
-                    try { IPar2 = (byte)Map.GetBlockByName(blockpar); }
-                    catch { }
-                }
+                tmpsa[i] = blockpar;
+                i++;
+                blockpar = cmd.Next();
             }
-            */
+            player.ientpl = i;
+            player.ientp = tmpsa;
             if (player.ientmode == BlockPlacementMode.ItemEnt)
             {
                 player.ientmode = BlockPlacementMode.Normal;

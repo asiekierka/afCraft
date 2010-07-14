@@ -987,15 +987,27 @@ namespace fCraft {
             {
                 ietlist.Add(ie);
             }
-            /*
-            if (ie.blocktype <= 49)
+        }
+        public bool AddItemEntity(ItemEntity ie, string[] ietp)
+        {
+            ItemEntity tmpie = ie;
+            switch (ie.type)
             {
-                lock (queueLock)
-                {
-                    QueueUpdate(new BlockUpdate(null, ie.x, ie.y, ie.h, ie.blocktype));
-                }
+                case 3:
+                    byte i = 255;
+                    try { i = Convert.ToByte(ietp[0]); }
+                    catch { return false; }
+                    if (i > 0 && i <= 49)
+                        ie.SetByte(0, i);
+                    else return false;
+                    break;
+                default: break;
             }
-            */
+            lock (ietlock)
+            {
+                ietlist.Add(tmpie);
+            }
+            return true;
         }
 
         public void ClearItemEntities()
@@ -1033,6 +1045,11 @@ namespace fCraft {
                         case 2: if (GetBlockA(ix, iy, ih+1) == 0)
                             {
                                 QueueUpdate(new BlockUpdate(null, ix, iy, ih+1, 10));
+                            }
+                            break;
+                        case 3: if (GetBlockA(ix, iy, ih + 1) == 0)
+                            {
+                                QueueUpdate(new BlockUpdate(null, ix, iy, ih + 1, pIEnt.GetByte(0)));
                             }
                             break;
                         default: break;

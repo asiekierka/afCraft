@@ -10,6 +10,7 @@ namespace fCraft
         Null = 0,
         WaterGen = 1,
         LavaGen = 2,
+        BlockGen = 3,
     }
 
     public struct ItemEntity
@@ -32,9 +33,9 @@ namespace fCraft
             ieBTs[0] = 255;
             ieBTs[1] = (byte)Block.Aqua;
             ieBTs[2] = (byte)Block.Orange;
-
+            ieBTs[3] = (byte)Block.Steel;
             // If I get lazy, this will fix my laziness
-            if(ietlen > 2)
+            if(ietlen > 3)
                 for (int i = 3; i <= ietlen; i++)
                 {
                     ieBTs[i] = 255;
