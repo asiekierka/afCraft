@@ -504,11 +504,12 @@ namespace fCraft {
         }
 
         // Broadcast to a specific class
-        public static void SendToClass( Packet packet, PlayerClass playerClass ) {
+        public static void SendToClass( Packet packet, PlayerClass playerClass, Player srcPlayer ) {
             Player[] tempList = playerList;
             for( int i = 0; i < tempList.Length; i++ ) {
-                if( tempList[i].info.playerClass == playerClass ) {
-                    tempList[i].Send( packet );
+                if ((tempList[i].info.playerClass == playerClass) || ((tempList[i].Can(Permissions.SeeLowerClassChat) && (tempList[i].info.playerClass.rank > playerClass.rank)) && tempList[i].info.name != srcPlayer.name))
+                {
+                    tempList[i].Send(packet);
                 }
             }
         }

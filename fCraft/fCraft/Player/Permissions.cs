@@ -20,6 +20,7 @@ namespace fCraft {
         Ban,
         BanIP,
         BanAll,
+        SeeLowerClassChat,
 
         Promote,
         Demote,

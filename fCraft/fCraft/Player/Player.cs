@@ -284,6 +284,7 @@ namespace fCraft {
             switch( Commands.GetMessageType( message ) ) {
                 case MessageType.Chat:
                     if( CheckChatSpam() ) return;
+                    if (!Can(Permissions.Chat)) return;
                     info.linesWritten++;
                     string displayedName = nick;
                     if( Config.GetBool( ConfigKey.ClassPrefixesInChat ) ) {
@@ -325,6 +326,7 @@ namespace fCraft {
 
                 case MessageType.PrivateChat:
                     if( CheckChatSpam() ) return;
+                    if (!Can(Permissions.Chat)) return;
                     string otherPlayerName = message.Substring( 1, message.IndexOf( ' ' ) - 1 );
                     Player otherPlayer = Server.FindPlayer( otherPlayerName );
                     if( otherPlayer != null ) {
@@ -338,12 +340,13 @@ namespace fCraft {
 
                 case MessageType.ClassChat:
                     if( CheckChatSpam() ) return;
+                    if (!Can(Permissions.Chat)) return;
                     string className = message.Substring( 2, message.IndexOf( ' ' ) - 2 );
                     PlayerClass playerClass = ClassList.FindClass( className );
                     if( playerClass != null ) {
                         Logger.Log( "{0} to class {1}: {2}", LogType.ClassChat, GetLogName(), playerClass.name, message );
                         Packet classMsg = PacketWriter.MakeMessage( Color.Gray + "[" + playerClass.color + playerClass.name + Color.Gray + "]" + nick + ": " + message.Substring( message.IndexOf( ' ' ) + 1 ) );
-                        Server.SendToClass( classMsg, playerClass );
+                        Server.SendToClass( classMsg, playerClass, this );
                         if( info.playerClass != playerClass ) {
                             Send( classMsg );
                         }
