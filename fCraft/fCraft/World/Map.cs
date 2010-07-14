@@ -857,6 +857,37 @@ namespace fCraft {
                                                 if (PlaceWater(ix, iz + 1, iy)) { QueueUpdate(new BlockUpdate(null, ix, iz + 1, iy, ib)); }
                                             }
                                             break;
+                                        case 2:
+                                            if (PlaceFPBlock(ix, iz, iy, ix, iz, iy - 1, ib))
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                int xt = rand.Next(0, 255) % 4;
+                                                int xstep = 0;
+                                                int ystep = 0;
+                                                switch (xt)
+                                                {
+                                                    case 0: xstep = 0; ystep = -1; break;
+                                                    case 1: xstep = 1; ystep = 0; break;
+                                                    case 2: xstep = 0; ystep = 1; break;
+                                                    case 3: xstep = -1; ystep = 0; break;
+                                                }
+                                                if (GetBlockA(ix + xstep, iz + ystep, iy) == 0)
+                                                {
+                                                    if (PlaceFPBlock(ix, iz, iy, ix + xstep, iz + ystep, iy - 1, ib))
+                                                    {
+                                                        break;
+                                                    }
+                                                    else if (rand.Next(0, 95) == 24)
+                                                    {
+                                                        PlaceFPBlock(ix, iz, iy, ix + xstep, iz + ystep, iy, ib);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            break;
                                         default: break;
                                     }
                                     break;
