@@ -59,6 +59,8 @@ namespace fCraft {
             thread = new Thread( WorldLoop );
             thread.IsBackground = true;
             blockFlag = new byte[50];
+            blockFlag[12] = 97; // 64 (lava) + 32 (water) + 1 (finite phy)
+            blockFlag[13] = 97;
         }
 
 
