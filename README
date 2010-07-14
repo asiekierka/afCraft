@@ -1,0 +1,35 @@
+afCraft, asie's buggy mod of fCraft!
+
+COMMANDS:
+---
+WireWorld (requires SwitchLogic permission):
+/logic - turn WireWorld mode on/off
+/logic3d - turn 3D wireworld mod on/off
+
+Physics (requires ControlPhysics permission):
+/physics - turn physics on/off
+/phyadd [block name/ID] - make a block use finite physics
+/phyrem [block name/ID] - make a block NOT use finite physics
+/phychk [block name/ID] - check if a block uses finite physics
+/wamode (0/1/2) - change water mode:
+0 - none
+1 - infinite - water/lava is infinite
+2 - finite - water/lava is finite and slippy (asiekierka's algorithm)
+/rwater - place real (moving) water
+/rlava - place real (moving) lava
+
+/phymode [block name/ID] [mode] - change a block's mode:
+
+The mode is a hard thing to edit, becuase it's bitwise.
+
+if you know bits, follow.
+
+the mode:
+0abcccde
+
+a - fall into lava: 0 - yes, 1 - no
+b - fall into water: 0 - yes, 1 - no
+ccc - slippiness chance: 000 - 1/8, 111 - 8/8
+d - slippiness (like water, which does 1/96 chance): 0 - off, 1 - on
+e - finite mode on/off (changed by phyadd/phyrem, phymode does not touch it)
+
