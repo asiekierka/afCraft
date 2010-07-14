@@ -78,7 +78,7 @@ namespace fCraft {
             }
         }
 
-
+        #region Water/Lava
         internal static void Water( Player player, Command cmd ) {
             if( player.mode == BlockPlacementMode.Water ) {
                 player.mode = BlockPlacementMode.Normal;
@@ -103,6 +103,7 @@ namespace fCraft {
                 player.NoAccessMessage( Permissions.PlaceLava );
             }
         }
+        #endregion
 
         #region RealWater/RealLava
 

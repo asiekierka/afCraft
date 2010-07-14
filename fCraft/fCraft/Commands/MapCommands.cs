@@ -777,7 +777,7 @@ namespace fCraft {
 
         #endregion
 
-        #region Asie's Commands
+        #region asie's Physics commands
 
         internal static void S_Physics(Player player, Command cmd)
         {
@@ -801,49 +801,6 @@ namespace fCraft {
             }
         }
 
-        internal static void SwitchLogic3d(Player player, Command cmd)
-        {
-            if (player.Can(Permissions.SwitchLogic))
-            {
-                if (player.world.logicOn3D == true)
-                {
-                    player.world.logicOn3D = false;
-                    Server.SendToAll(player.name + " set 3D logic mode to OFF.");
-                }
-                else
-                {
-                    player.world.logicOn3D = true;
-                    Server.SendToAll(player.name + " set 3D logic mode to ON.");
-                }
-            }
-            else
-            {
-                player.NoAccessMessage(Permissions.SwitchLogic);
-            }
-        }
-
-        internal static void SwitchLogic(Player player, Command cmd)
-        {
-            if (player.Can(Permissions.SwitchLogic))
-            {
-                if (player.world.logicOn == true)
-                {
-                    player.world.logicOn = false;
-                    Server.SendToAll(player.name + " set logic features to OFF.");
-                    player.world.map.ClearUpdateQueue();
-                }
-                else
-                {
-                    player.world.logicOn = true;
-                    Server.SendToAll(player.name + " set logic features to ON.");
-                }
-            }
-            else
-            {
-                player.NoAccessMessage(Permissions.SwitchLogic);
-            }
-        }
-
         internal static void Phyadd(Player player, Command cmd)
         {
             if (!player.Can(Permissions.ControlPhysics))
@@ -854,7 +811,8 @@ namespace fCraft {
             string blockpar = cmd.Next();
             int BlockAddr = -1;
             try { BlockAddr = Convert.ToInt32(blockpar); }
-            catch {
+            catch
+            {
                 try { BlockAddr = (int)Map.GetBlockByName(blockpar); }
                 catch { player.Message("Incorrect parameter!"); return; }
             }
@@ -873,7 +831,7 @@ namespace fCraft {
             string blockpar2 = cmd.Next();
             if (blockpar == "" || blockpar2 == "")
             {
-                player.Message("Not enough parameters!"); return; 
+                player.Message("Not enough parameters!"); return;
             }
             int BlockAddr = -1;
             byte BlockMode = 0;
@@ -923,7 +881,7 @@ namespace fCraft {
                 try { BlockAddr = (int)Map.GetBlockByName(blockpar); }
                 catch { player.Message("Incorrect parameter!"); return; }
             }
-            if ((player.world.blockFlag[BlockAddr] & 1)>0)
+            if ((player.world.blockFlag[BlockAddr] & 1) > 0)
             {
                 player.Message("Block '" + blockpar + "' is hpysicsized.");
             }
@@ -951,7 +909,7 @@ namespace fCraft {
             if (BlockAddr < 2 && BlockAddr >= 0)
             {
                 player.world.modeWater = BlockAddr;
-                switch(BlockAddr)
+                switch (BlockAddr)
                 {
                     case 0: wmt = "'none'"; break;
                     case 1: wmt = "'infinite'"; break;
@@ -961,6 +919,51 @@ namespace fCraft {
             }
         }
 
+        #endregion
+
+        #region asie's WireWorld commands
+        internal static void SwitchLogic3d(Player player, Command cmd)
+        {
+            if (player.Can(Permissions.SwitchLogic))
+            {
+                if (player.world.logicOn3D == true)
+                {
+                    player.world.logicOn3D = false;
+                    Server.SendToAll(player.name + " set 3D logic mode to OFF.");
+                }
+                else
+                {
+                    player.world.logicOn3D = true;
+                    Server.SendToAll(player.name + " set 3D logic mode to ON.");
+                }
+            }
+            else
+            {
+                player.NoAccessMessage(Permissions.SwitchLogic);
+            }
+        }
+
+        internal static void SwitchLogic(Player player, Command cmd)
+        {
+            if (player.Can(Permissions.SwitchLogic))
+            {
+                if (player.world.logicOn == true)
+                {
+                    player.world.logicOn = false;
+                    Server.SendToAll(player.name + " set logic features to OFF.");
+                    player.world.map.ClearUpdateQueue();
+                }
+                else
+                {
+                    player.world.logicOn = true;
+                    Server.SendToAll(player.name + " set logic features to ON.");
+                }
+            }
+            else
+            {
+                player.NoAccessMessage(Permissions.SwitchLogic);
+            }
+        }
         #endregion
     }
 }
