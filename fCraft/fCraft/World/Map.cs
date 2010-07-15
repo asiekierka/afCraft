@@ -1025,11 +1025,13 @@ namespace fCraft {
                                 #region LogiProc - Grass (lacking)
                                 case 3: // Dirt
                                     tv = GetBlock(ix, iz, iy + 1);
-                                    if (tv == 0 || tv == 18 || tv == 20) QueueUpdate(new BlockUpdate(null, ix, iz, iy, 2));
+                                    int tva = BlockScanM(ix, iz, iy, 2, false, false) + BlockScanM(ix, iz, iy - 1, 2, false, false) + BlockScanM(ix, iz, iy + 1, 2, false, false);
+                                    if (tva > 4) tva = 4;
+                                    if ((tv == 0 || tv == 18 || tv == 20) && ((rand.Next(0,95) == 12) || (rand.Next(0,6*((4-tva)+1))==3 && tva>0))) QueueUpdate(new BlockUpdate(null, ix, iz, iy, 2));
                                     break;
                                 case 2: // Grass
                                     tv = GetBlock(ix, iz, iy + 1);
-                                    if (tv != 0 && tv != 18 && tv != 20) QueueUpdate(new BlockUpdate(null, ix, iz, iy, 3));
+                                    if ((tv != 0 && tv != 18 && tv != 20) && (rand.Next(0,35) == 31)) QueueUpdate(new BlockUpdate(null, ix, iz, iy, 3));
                                     break;
                                 #endregion
                                 #region LogiProc - TNT (physics)
