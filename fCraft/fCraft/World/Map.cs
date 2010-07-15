@@ -288,6 +288,7 @@ namespace fCraft {
             blockNames["bricks"] = Block.Brick;
             blockNames["explosive"] = Block.TNT;
             blockNames["dynamite"] = Block.TNT;
+            blockNames["c4"] = Block.TNT;
 
             blockNames["bookcase"] = Block.Books;
             blockNames["bookshelf"] = Block.Books;

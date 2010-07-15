@@ -7,7 +7,8 @@ namespace fCraft {
     enum DrawMode {
         Cuboid,
         Ellipsoid,
-        Fill
+        Fill,
+        Replace
     }
 
     static class DrawCommands {
@@ -18,6 +19,7 @@ namespace fCraft {
             Commands.AddCommand( "ellipsoid", Ellipsoid, false );
             Commands.AddCommand( "ell", Ellipsoid, false );
             Commands.AddCommand( "mark", Mark, false );
+            Commands.AddCommand("replace", ReplaceDraw, false);
             Commands.AddCommand( "undo", UndoDraw, false );
             Commands.AddCommand( "cancel", CancelDraw, false );
 
@@ -38,6 +40,10 @@ namespace fCraft {
             string blockName = command.Next();
         }
 
+        internal static void ReplaceDraw(Player player, Command cmd)
+        {
+            Draw(player, cmd, DrawMode.Replace);
+        }
 
         internal static void Cuboid( Player player, Command cmd ) {
             Draw( player, cmd, DrawMode.Cuboid );
@@ -61,6 +67,7 @@ namespace fCraft {
                 return;
             }
             string blockName = cmd.Next();
+            string blockName2 = cmd.Next();
             object blockTypeTag = null;
 
             Permissions permission = Permissions.Build;
@@ -71,10 +78,21 @@ namespace fCraft {
                 try {
                     block = Map.GetBlockByName( blockName );
                 } catch( Exception ) {
-                    player.Message( "Unknown block name: " + blockName );
+                    try
+                    {
+                        block = (Block)Convert.ToByte(blockName);
+                    }
+                    catch (Exception)
+                    {
+                        player.Message("Unknown block name: " + blockName);
+                        return;
+                    }
+                }
+                if ((int)block < 0 || (int)block > 49)
+                {
+                    player.Message("Invalid block ID!");
                     return;
                 }
-
                 switch( block ) {
                     case Block.Admincrete: permission = Permissions.PlaceAdmincrete; break;
                     case Block.Air: permission = Permissions.Delete; break;
@@ -86,6 +104,42 @@ namespace fCraft {
 
                 blockTypeTag = block;
             }
+            else if (mode == DrawMode.Replace)
+            {
+                player.Message("Not enough parameters!");
+                return;
+            }
+
+            Block block2;
+            if (blockName2 != null && mode == DrawMode.Replace)
+            {
+                try
+                {
+                    block2 = Map.GetBlockByName(blockName2);
+                }
+                catch (Exception)
+                {
+                    try
+                    {
+                        block2 = (Block)Convert.ToByte(blockName2);
+                    }
+                    catch (Exception)
+                    {
+                        player.Message("Unknown block name: " + blockName2);
+                        return;
+                    }
+                }
+                if ((int)block2 < 0 || (int)block2 > 49)
+                {
+                    player.Message("Invalid block ID!");
+                    return;
+                }
+            }
+            else
+            {
+                player.Message("Not enough parameters!");
+                return;
+            }
             // otherwise, use the last-used-block
 
             if( !player.Can( permission ) ) {
@@ -94,6 +148,7 @@ namespace fCraft {
             }
 
             player.tag = blockTypeTag;
+            player.bl2 = block2;
             switch( mode ) {
                 case DrawMode.Cuboid:
                     player.selectionCallback = DrawCuboid;
@@ -106,6 +161,10 @@ namespace fCraft {
                 case DrawMode.Fill:
                     player.selectionCallback = DoFill;
                     player.marksExpected = 1;
+                    break;
+                case DrawMode.Replace:
+                    player.selectionCallback = DoReplace;
+                    player.marksExpected = 2;
                     break;
             }
             player.markCount = 0;
@@ -299,6 +358,81 @@ namespace fCraft {
 
         internal static void DoFill( Player player, Position[] marks, object tag ) {
             player.drawingInProgress = true;
+            player.drawingInProgress = false;
+        }
+
+        internal static void DoReplace(Player player, Position[] marks, object tag)
+        {
+            player.drawingInProgress = true;
+
+            Block rfromBlock;
+            Block rtoBlock;
+            if (tag == null || player.bl2 == null)
+            {
+                player.Message("ERROR: variable 'tag' or 'bl2' unspecified!");
+                return;
+            }
+            else
+            {
+                rfromBlock = (Block)tag;
+                rtoBlock = (Block)player.bl2;
+            }
+
+            // find start/end coordinates
+            int sx = Math.Min(marks[0].x, marks[1].x);
+            int ex = Math.Max(marks[0].x, marks[1].x);
+            int sy = Math.Min(marks[0].y, marks[1].y);
+            int ey = Math.Max(marks[0].y, marks[1].y);
+            int sh = Math.Min(marks[0].h, marks[1].h);
+            int eh = Math.Max(marks[0].h, marks[1].h);
+
+            int blocks;
+            byte block;
+            int step = 8;
+
+            blocks = (ex - sx + 1) * (ey - sy + 1) * (eh - sh + 1);
+            if (blocks > 2000000)
+            {
+                player.Message("NOTE: This draw command is too massive to undo.");
+            }
+
+            if (rfromBlock == Block.Admincrete && !player.Can(Permissions.DeleteAdmincrete))
+            {
+                player.Message("Error: Cannot delete admincrete!");
+                return;
+            }
+            if (rtoBlock == Block.Admincrete && !player.Can(Permissions.PlaceAdmincrete))
+            {
+                player.Message("Error: Cannot place admincrete!");
+                return;
+            }
+            for (int x = sx; x <= ex; x += step)
+            {
+                for (int y = sy; y <= ey; y += step)
+                {
+                    for (int h = sh; h <= eh; h++)
+                    {
+                        for (int y3 = 0; y3 < step && y + y3 <= ey; y3++)
+                        {
+                            for (int x3 = 0; x3 < step && x + x3 <= ex; x3++)
+                            {
+                                block = player.world.map.GetBlock(x + x3, y + y3, h);
+                                if (block == (byte)rfromBlock)
+                                {
+                                    player.drawUndoBuffer.Enqueue(new BlockUpdate(Player.Console, x + x3, y + y3, h, block));
+                                    player.world.map.QueueUpdate(new BlockUpdate(Player.Console, x + x3, y + y3, h, (byte)rtoBlock));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            player.Message("Replacing " + blocks + " blocks... The map is now being updated.");
+            Logger.Log("{0} initiated replacing an area containing {1} blocks from type {2} to type {3}.", LogType.UserActivity,
+                                  player.GetLogName(),
+                                  blocks,
+                                  rfromBlock.ToString(), rtoBlock.ToString());
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Optimized);
             player.drawingInProgress = false;
         }
     }

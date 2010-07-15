@@ -58,7 +58,7 @@ namespace fCraft {
         internal int markCount = 0;
         internal int marksExpected = 0;
         internal object tag; // can be used for 'block' or 'zone' or whatever
-
+        internal object bl2; // used for 'replace', asie's addon
 
         // This constructor is used to create dummy players (such as Console and /dummy)
         // It will soon be replaced by a generic Entity class
