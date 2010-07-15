@@ -86,7 +86,7 @@ namespace fCraft {
             if( name.Length < 2 || name.Length > 16 ) return false;
             for( int i = 0; i < name.Length; i++ ) {
                 char ch = name[i];
-                if( ch < '0' || (ch > '9' && ch < 'A') || (ch > 'Z' && ch < '_') || (ch > '_' && ch < 'a') || ch > 'z' ) {
+                if(ch != '.' && ( ch < '0' || (ch > '9' && ch < 'A') || (ch > 'Z' && ch < '_') || (ch > '_' && ch < 'a') || ch > 'z')) {
                     return false;
                 }
             }
@@ -188,12 +188,16 @@ namespace fCraft {
 
             // check if the user has the permission to BUILD the block
             if( buildMode || replaceMode ) {
-                if( type == Block.Lava || type == Block.StillLava ) {
+                if(type == Block.StillLava ) {
                     can = Can( Permissions.PlaceLava );
-                } else if( type == Block.Water || type == Block.StillWater ) {
+                } else if(type == Block.StillWater ) {
                     can = Can( Permissions.PlaceWater );
                 } else if( type == Block.Admincrete ) {
                     can = Can( Permissions.PlaceAdmincrete );
+                } else if(type == Block.Lava) {
+                    can = Can(Permissions.PlaceRealLava);
+                } else if (type == Block.Water) {
+                    can = Can(Permissions.PlaceRealWater);
                 } else {
                     can = zoneOverride || Can( Permissions.Build );
                 }
@@ -263,6 +267,12 @@ namespace fCraft {
                                 Message("ItemEntity removed.");
                             }
                         }
+                    }
+                    if (type == Block.Air && world.map.GetBlock(x, y, h) == 46 && Can(Permissions.DestroyTNT))
+                    {
+                        world.map.tntpl.Clear();
+                        world.map.TNTExplode(x, y, h);
+                        world.map.PostQueueProcess();
                     }
                     blockUpdate = new BlockUpdate( this, x, y, h, (byte)type );
                     if( !world.FireChangedBlockEvent( ref blockUpdate ) ) {

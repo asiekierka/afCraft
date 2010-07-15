@@ -17,6 +17,7 @@ namespace fCraft {
         PlaceItemEnt, // place item entities
         PlaceRealWater,
         PlaceRealLava,
+        DestroyTNT,
 
         Say,
         Kick,

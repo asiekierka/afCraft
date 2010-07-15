@@ -23,6 +23,8 @@ namespace fCraft {
         Queue<BlockUpdate> postupdates = new Queue<BlockUpdate>();
         public List<ItemEntity> ietlist = new List<ItemEntity>();
         object ietlock = new object();
+        public List<Position> tntpl = new List<Position>();
+        object tntplock = new object();
 
         internal Map() { }
 
@@ -577,6 +579,103 @@ namespace fCraft {
                 return blocks[Index(x, y, h)];
             return 255;
         }
+        internal int BlockScanM(int ox, int oz, int oy, byte ob, bool CheckDiag, bool CheckSelf)
+        {
+            int oi = 0;
+            if ((CheckSelf == true) && (GetBlockA(ox, oz, oy) == ob)) { oi++; }
+            if (GetBlockA(ox, oz - 1, oy) == ob) { oi++; }
+            if (GetBlockA(ox - 1, oz, oy) == ob) { oi++; }
+            if (GetBlockA(ox + 1, oz, oy) == ob) { oi++; }
+            if (GetBlockA(ox, oz + 1, oy) == ob) { oi++; }
+            if (CheckDiag == true)
+            {
+                if (GetBlockA(ox - 1, oz - 1, oy) == ob) { oi++; }
+                if (GetBlockA(ox + 1, oz - 1, oy) == ob) { oi++; }
+                if (GetBlockA(ox - 1, oz + 1, oy) == ob) { oi++; }
+                if (GetBlockA(ox + 1, oz + 1, oy) == ob) { oi++; }
+            }
+            return oi;
+        }
+        internal void PostQueueProcess()
+        {
+            lock (pqLock)
+            {
+                lock (queueLock)
+                {
+                    while (postupdates.Count > 0)
+                    {
+                        BlockUpdate pubu = postupdates.Dequeue();
+                        updates.Enqueue(pubu);
+                    }
+                }
+            }
+        }
+        internal void TNTExplode(int ox, int oz, int oy)
+        {
+            tntpl.Add(new Position((short)ox, (short)oz, (short)oy));
+            for (int sx = -2; sx < 3; sx++)
+            {
+                for (int sz = -2; sz < 3; sz++)
+                {
+                    for (int sy = -2; sy < 3; sy++)
+                    {
+                        if ((sx != 0 || sz != 0 || sy != 0) && GetBlockA(ox + sx, oz + sz, oy + sy) == 46)
+                        {
+                            lock (tntplock)
+                            {
+                                int i = 0;
+                                foreach (Position tp in tntpl)
+                                {
+                                    if (tp.x == ox+sx && tp.y == oz+sz && tp.h == oy+sy) i++;
+                                }
+                                if (i == 0)
+                                {
+                                    TNTExplode(ox + sx, oz + sz, oy + sy);
+                                }
+                            }
+                        }
+                        else if (GetBlockA(ox + sx, oz + sz, oy + sy) != 7)
+                        {
+                            PostQueueUpdate(new BlockUpdate(null, ox + sx, oz + sz, oy + sy, 0));
+                        }
+                    }
+                }
+            }
+        }
+        internal void TNTExplodeWW(int ox, int oz, int oy)
+        {
+            byte tb;
+            tntpl.Add(new Position((short)ox, (short)oz, (short)oy));
+            for (int sx = -2; sx < 3; sx++)
+            {
+                for (int sz = -2; sz < 3; sz++)
+                {
+                    for (int sy = -2; sy < 3; sy++)
+                    {
+                        tb = GetBlockA(ox + sx, oz + sz, oy + sy);
+                        if ((sx != 0 || sz != 0 || sy != 0) && tb == 46)
+                        {
+                            lock (tntplock)
+                            {
+                                int i = 0;
+                                foreach (Position tp in tntpl)
+                                {
+                                    if (tp.x == ox + sx && tp.y == oz + sz && tp.h == oy + sy) i++;
+                                }
+                                if (i == 0)
+                                {
+                                    TNTExplode(ox + sx, oz + sz, oy + sy);
+                                }
+                            }
+                        }
+                        else if (tb != 7 && tb != 21 && tb != 23 && tb != 34)
+                        {
+                            PostQueueUpdate(new BlockUpdate(null, ox + sx, oz + sz, oy + sy, 0));
+                        }
+                    }
+                }
+            }
+        }
         #endregion
         #region WireWorld utils
         internal int LogiScan(int ox, int oz, int oy, bool CheckSelf)
@@ -747,7 +846,7 @@ namespace fCraft {
             {
                 if (LastLavaTime == -1) { LastLavaTime = tempPT; tempPON = true; }
                 if (LastLavaTime == 0) { LastLavaTime = 100; }
-                if (tempPT - LastLavaTime >= 110) { tempPON = true; LastLavaTime = tempPT; }
+                if (tempPT - LastLavaTime >= 45) { tempPON = true; LastLavaTime = tempPT; }
                 if (world.blockFlag == null) { world.blockFlag = new byte[50]; }
             }
             #endregion
@@ -767,14 +866,21 @@ namespace fCraft {
                             {
                                 case 21: QueueUpdate(new BlockUpdate(null, ix, iz, iy, 34)); break;
                                 case 34: QueueUpdate(new BlockUpdate(null, ix, iz, iy, 23)); break;
-                                case 23: int i = 0;
-                                    i += LogiScan(ix, iz, iy, false);
+                                case 23: int i = LogiScan(ix, iz, iy, false);
                                     if (world.logicOn3D == true)
                                     {
                                         i += LogiScan(ix, iz, iy - 1, true);
                                         i += LogiScan(ix, iz, iy + 1, true);
                                     }
                                     if ((i > 0) && (i < 3)) { QueueUpdate(new BlockUpdate(null, ix, iz, iy, 21)); }
+                                    break;
+                                // TNT!
+                                case 46: int ti = BlockScanM(ix, iz, iy, 21, false, false);
+                                    if (ti > 0)
+                                    {
+                                        tntpl.Clear();
+                                        TNTExplodeWW(ix, iz, iy);
+                                    }
                                     break;
                                 default: break;
                             }
@@ -922,13 +1028,26 @@ namespace fCraft {
                                     if (tv != 0 && tv != 18 && tv != 20) QueueUpdate(new BlockUpdate(null, ix, iz, iy, 3));
                                     break;
                                 #endregion
+                                #region LogiProc - TNT (physics)
+                                case 46: int ti = BlockScanM(ix, iz, iy, 10, false, false);
+                                    if (ti > 0)
+                                    {
+                                        tntpl.Clear();
+                                        TNTExplode(ix, iz, iy);
+                                    }
+                                    break;
+                                #endregion
                             }
                                 #region LogiProc - finite physics
                                 if ((world.blockFlag[ib]&1) == 1)
                                     {
                                         if (PlaceFPBlock(ix,iz,iy,ix,iz,iy-1,ib))
                                         {
-
+                                            if (ib == 46 && GetBlockA(ix,iz,iy-2) > 0)
+                                            {
+                                                tntpl.Clear();
+                                                TNTExplode(ix, iz, iy - 1);
+                                            }
                                         }
                                         else
                                         {
@@ -946,7 +1065,11 @@ namespace fCraft {
                                             {
                                                 if (PlaceFPBlock(ix, iz, iy, ix + xstep, iz + ystep, iy - 1, ib))
                                                 {
-
+                                                    if (ib == 46 && GetBlockA(ix+xstep, iz+ystep, iy - 2) > 0)
+                                                    {
+                                                        tntpl.Clear();
+                                                        TNTExplode(ix+xstep, iz+ystep, iy - 1);
+                                                    }
                                                 }
                                                 else if (((world.blockFlag[ib] & 2) > 0) && (rand.Next(0, 31) < ((world.blockFlag[ib] & 28) + 3)))
                                                 {
@@ -960,17 +1083,7 @@ namespace fCraft {
                     }
                 }
             }
-            lock (pqLock)
-            {
-                lock (queueLock)
-                {
-                    while (postupdates.Count > 0)
-                    {
-                        BlockUpdate pubu = postupdates.Dequeue();
-                        updates.Enqueue(pubu);
-                    }
-                }
-            }
+            PostQueueProcess();
         }
         #endregion
 
