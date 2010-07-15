@@ -110,7 +110,7 @@ namespace fCraft {
                 return;
             }
 
-            Block block2;
+            Block block2 = Block.Undefined;
             if (blockName2 != null && mode == DrawMode.Replace)
             {
                 try
@@ -135,7 +135,7 @@ namespace fCraft {
                     return;
                 }
             }
-            else
+            else if (mode == DrawMode.Replace && blockName2 == null)
             {
                 player.Message("Not enough parameters!");
                 return;
@@ -148,7 +148,7 @@ namespace fCraft {
             }
 
             player.tag = blockTypeTag;
-            player.bl2 = block2;
+            if(mode == DrawMode.Replace) player.bl2 = block2;
             switch( mode ) {
                 case DrawMode.Cuboid:
                     player.selectionCallback = DrawCuboid;
