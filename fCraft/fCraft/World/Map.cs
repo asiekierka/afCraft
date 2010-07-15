@@ -301,6 +301,9 @@ namespace fCraft {
             blockNames["mossyrock"] = Block.MossyRocks;
             blockNames["mossystone"] = Block.MossyRocks;
             blockNames["mossystones"] = Block.MossyRocks;
+
+            blockNames["rwater"] = Block.Water;
+            blockNames["rlava"] = Block.Lava;
         }
 
 
