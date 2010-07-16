@@ -783,15 +783,15 @@ namespace fCraft {
         {
             if (player.Can(Permissions.ControlPhysics))
             {
-                if (player.world.physicsOn == true)
+                if (player.world.map.physicsOn == true)
                 {
-                    player.world.physicsOn = false;
+                    player.world.map.physicsOn = false;
                     Server.SendToAll(player.name + " set physics to OFF.");
                     player.world.map.ClearUpdateQueue();
                 }
                 else
                 {
-                    player.world.physicsOn = true;
+                    player.world.map.physicsOn = true;
                     Server.SendToAll(player.name + " set physics to ON.");
                 }
             }
@@ -816,7 +816,7 @@ namespace fCraft {
                 try { BlockAddr = (int)Map.GetBlockByName(blockpar); }
                 catch { player.Message("Incorrect parameter!"); return; }
             }
-            player.world.blockFlag[BlockAddr] |= 1;
+            player.world.map.blockFlag[BlockAddr] |= 1;
             player.Message("Block '" + blockpar + "' is now hpysicsized!");
         }
 
@@ -847,9 +847,9 @@ namespace fCraft {
                 player.Message("Incorrect parameter!"); return;
             }
 
-            byte bmtmp = player.world.blockFlag[BlockAddr];
+            byte bmtmp = player.world.map.blockFlag[BlockAddr];
             if (BlockAddr < 0 || BlockAddr > 49) { player.Message("Incorrect parameter!"); return; }
-            player.world.blockFlag[BlockAddr] = Convert.ToByte((bmtmp & 1) | (BlockMode & 254));
+            player.world.map.blockFlag[BlockAddr] = Convert.ToByte((bmtmp & 1) | (BlockMode & 254));
             player.Message("Block '" + blockpar + "' has been modified.");
         }
 
@@ -869,7 +869,7 @@ namespace fCraft {
                 catch { player.Message("Incorrect parameter!"); return; }
             }
             if (BlockAddr < 0 || BlockAddr > 49) { player.Message("Incorrect parameter!"); return; }
-            player.world.blockFlag[BlockAddr] &= 254;
+            player.world.map.blockFlag[BlockAddr] &= 254;
             player.Message("Block '" + blockpar + "' is now un-hpysicsized!");
         }
 
@@ -884,7 +884,7 @@ namespace fCraft {
                 catch { player.Message("Incorrect parameter!"); return; }
             }
             if (BlockAddr < 0 || BlockAddr > 49) { player.Message("Incorrect parameter!"); return; }
-            if ((player.world.blockFlag[BlockAddr] & 1) > 0)
+            if ((player.world.map.blockFlag[BlockAddr] & 1) > 0)
             {
                 player.Message("Block '" + blockpar + "' is hpysicsized.");
             }
@@ -911,7 +911,7 @@ namespace fCraft {
             }
             if (BlockAddr < 3 && BlockAddr >= 0)
             {
-                player.world.modeWater = BlockAddr;
+                player.world.map.modeWater = BlockAddr;
                 switch (BlockAddr)
                 {
                     case 0: wmt = "'none'"; break;
@@ -929,14 +929,14 @@ namespace fCraft {
         {
             if (player.Can(Permissions.SwitchLogic))
             {
-                if (player.world.logicOn3D == true)
+                if (player.world.map.logicOn3D == true)
                 {
-                    player.world.logicOn3D = false;
+                    player.world.map.logicOn3D = false;
                     Server.SendToAll(player.name + " set 3D logic mode to OFF.");
                 }
                 else
                 {
-                    player.world.logicOn3D = true;
+                    player.world.map.logicOn3D = true;
                     Server.SendToAll(player.name + " set 3D logic mode to ON.");
                 }
             }
@@ -950,15 +950,15 @@ namespace fCraft {
         {
             if (player.Can(Permissions.SwitchLogic))
             {
-                if (player.world.logicOn == true)
+                if (player.world.map.logicOn == true)
                 {
-                    player.world.logicOn = false;
+                    player.world.map.logicOn = false;
                     Server.SendToAll(player.name + " set logic features to OFF.");
                     player.world.map.ClearUpdateQueue();
                 }
                 else
                 {
-                    player.world.logicOn = true;
+                    player.world.map.logicOn = true;
                     Server.SendToAll(player.name + " set logic features to ON.");
                 }
             }

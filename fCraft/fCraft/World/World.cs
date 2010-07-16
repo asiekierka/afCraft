@@ -42,9 +42,7 @@ namespace fCraft {
                     neverUnload;
         public PlayerClass classAccess, classBuild;
 
-        public byte[] blockFlag;
-        public bool logicOn, logicOn3D, physicsOn;
-        public int modeWater;
+
         object playerListLock = new object(),
                mapLock = new object();
 
@@ -59,9 +57,6 @@ namespace fCraft {
             classBuild = ClassList.lowestClass;
             thread = new Thread( WorldLoop );
             thread.IsBackground = true;
-            blockFlag = new byte[50];
-            blockFlag[12] = 97; // 64 (lava) + 32 (water) + 1 (finite phy)
-            blockFlag[13] = 97;
         }
 
 

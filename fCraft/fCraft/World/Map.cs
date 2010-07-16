@@ -25,11 +25,22 @@ namespace fCraft {
         object ietlock = new object();
         public List<Position> tntpl = new List<Position>();
         object tntplock = new object();
+        public byte[] blockFlag;
+        public bool logicOn, logicOn3D, physicsOn;
+        public int modeWater;
 
-        internal Map() { }
+        internal Map()
+        {
+            blockFlag = new byte[50];
+            blockFlag[12] = 97; // 64 (lava) + 32 (water) + 1 (finite phy)
+            blockFlag[13] = 97;
+        }
 
         public Map( World _world ) {
             world = _world;
+            blockFlag = new byte[50];
+            blockFlag[12] = 97; // 64 (lava) + 32 (water) + 1 (finite phy)
+            blockFlag[13] = 97;
         }
 
         // creates an empty new world of specified dimensions
@@ -43,6 +54,9 @@ namespace fCraft {
 
             blocks = new byte[blockCount];
             blocks.Initialize();
+            blockFlag = new byte[50];
+            blockFlag[12] = 97; // 64 (lava) + 32 (water) + 1 (finite phy)
+            blockFlag[13] = 97;
         }
 
 
@@ -103,7 +117,7 @@ namespace fCraft {
 
         internal void WriteMetadata( BinaryWriter writer ) {
             lock( metaLock ) {
-                writer.Write( (ushort)( meta.Count + zones.Count ) );
+                writer.Write( (ushort)( meta.Count + zones.Count + ietlist.Count + 1 ) );
                 foreach( KeyValuePair<string, string> pair in meta ) {
                     WriteLengthPrefixedString( writer, pair.Key );
                     WriteLengthPrefixedString( writer, pair.Value );
@@ -115,6 +129,28 @@ namespace fCraft {
                         WriteLengthPrefixedString( writer, zone.Serialize() );
                     }
                 }
+                i = 0;
+                lock (ietlock)
+                {
+                    foreach (ItemEntity ien in ietlist)
+                    {
+                        WriteLengthPrefixedString(writer, "@ient" + i);
+                        WriteLengthPrefixedString(writer, "1");
+                        writer.Write(ien.x);
+                        writer.Write(ien.y);
+                        writer.Write(ien.h);
+                        writer.Write(ien.type);
+                        writer.Write(ien.data);
+                        i++;
+                    }
+                }
+                WriteLengthPrefixedString(writer, "@phydata");
+                WriteLengthPrefixedString(writer, "1");
+                writer.Write(logicOn);
+                writer.Write(logicOn3D);
+                writer.Write(physicsOn);
+                writer.Write((byte)modeWater);
+                writer.Write(blockFlag);
             }
             writer.Flush();
         }
@@ -198,7 +234,37 @@ namespace fCraft {
             return true;
         }
 
+        internal int StrToInt(string sti)
+        {
+            int pdv;
+            try { pdv = Convert.ToInt32(sti); }
+            catch (Exception ex)
+            {
+                Logger.Log("Map.StrToInt: cannot parse string '" + sti + "' to integer: {0}", LogType.Error, ex.Message);
+                return -1;
+            }
+            return pdv;
+        }
 
+        internal bool ByteToBool(byte b)
+        {
+            try { if (b > 0) return true; else return false; }
+            catch (Exception ex)
+            {
+                Logger.Log("Map.ByteToBool: cannot parse byte to boolean: {0}", LogType.Error, ex.Message);
+                return false;
+            }
+        }
+
+        internal byte BoolToByte(bool b)
+        {
+            try { if (b) return 1; else return 0; }
+            catch (Exception ex)
+            {
+                Logger.Log("Map.BoolToByte: cannot parse boolean to byte: {0}", LogType.Error, ex.Message);
+                return 0;
+            }
+        }
         internal void ReadMetadata( BinaryReader reader ) {
             try {
                 int metaSize = (int)reader.ReadUInt16();
@@ -212,7 +278,54 @@ namespace fCraft {
                         } catch( Exception ex ) {
                             Logger.Log( "Map.ReadMetadata: cannot parse a zone: {0}", LogType.Error, ex.Message );
                         }
-                    } else {
+                    }
+                    else if (key.StartsWith("@phydata"))
+                    {
+                        int pdv = StrToInt(value.Substring(0,1));
+                        if(pdv>=0)
+                        {
+                        switch (pdv)
+                        {
+                            case 1:
+                                byte[] phydata = reader.ReadBytes(54);
+                                // logicOn, logicOn3d, physicsOn, wamode, blockFlag
+                                logicOn = Convert.ToBoolean(phydata[0]);
+                                logicOn3D = Convert.ToBoolean(phydata[1]);
+                                physicsOn = Convert.ToBoolean(phydata[2]);
+                               modeWater = phydata[3];
+                                for (i = 4; i < 54; i++)
+                                {
+                                    blockFlag[i - 4] = phydata[i];
+                                }
+                                break;
+                            default: Logger.Log("Map.ReadMetadata: Undefined physics data version!", LogType.Error);
+                                     break;
+                        }
+                        }
+                    }
+                    else if (key.StartsWith("@ient"))
+                    {
+                        int pdv = StrToInt(value);
+                        if (pdv >= 0)
+                        {
+                            switch (pdv)
+                            {
+                                case 1:
+                                    int iex = reader.ReadInt32();
+                                    int iey = reader.ReadInt32();
+                                    int ieh = reader.ReadInt32();
+                                    int iet = reader.ReadInt32();
+                                    ItemEntity ien = new ItemEntity(iex, iey, ieh, iet);
+                                    byte[] iendata = reader.ReadBytes(ien.data.Length);
+                                    iendata.CopyTo(ien.data, 0);
+                                    AddItemEntity(ien);
+                                    break;
+                                default: Logger.Log("Map.ReadMetadata: Undefined IEData version!", LogType.Error);
+                                    break;
+                            }
+                        }
+                    } else
+                    {
                         meta.Add( key, value );
                     }
                 }
@@ -512,7 +625,7 @@ namespace fCraft {
 
             if (updates.Count == 0 && world.isReadyForUnload == false)
             {
-                if ((world.logicOn == true) || (world.physicsOn == true)) LogiProc();
+                if ((logicOn == true) || (physicsOn == true)) LogiProc();
                 ProcessItemEntities();
             }
 
@@ -708,11 +821,11 @@ namespace fCraft {
             {
                 return true;
             }
-            else if (((world.blockFlag[it] & 32) > 0) && GetBlockA(ix, iz, iy) == 8)
+            else if (((blockFlag[it] & 32) > 0) && GetBlockA(ix, iz, iy) == 8)
             {
                 return true;
             }
-            else if (((world.blockFlag[it] & 64) > 0) && GetBlockA(ix, iz, iy) == 10)
+            else if (((blockFlag[it] & 64) > 0) && GetBlockA(ix, iz, iy) == 10)
             {
                 return true;
             }
@@ -726,9 +839,9 @@ namespace fCraft {
                 QueueUpdate(new BlockUpdate(null, ox, oz, oy, 0));
                 return true;
             }
-            else if (((world.blockFlag[it] & 32) > 0) && GetBlockA(ix, iz, iy) == 8)
+            else if (((blockFlag[it] & 32) > 0) && GetBlockA(ix, iz, iy) == 8)
             {
-                switch(world.modeWater)
+                switch(modeWater)
                 {
                     case 2: // finite water
                         QueueUpdate(new BlockUpdate(null, ix, iz, iy, it));
@@ -748,9 +861,9 @@ namespace fCraft {
                         return true;
                 }
             }
-            else if (((world.blockFlag[it] & 64) > 0) && GetBlockA(ix, iz, iy) == 10)
+            else if (((blockFlag[it] & 64) > 0) && GetBlockA(ix, iz, iy) == 10)
             {
-                switch (world.modeWater)
+                switch (modeWater)
                 {
                     case 2: // finite lava
                         QueueUpdate(new BlockUpdate(null, ix, iz, iy, it));
@@ -846,17 +959,17 @@ namespace fCraft {
             #region LogiProc - lava delay
             Boolean tempPON = false;
             long tempPT = DateTime.UtcNow.Ticks / 100000;
-            if (world.physicsOn == true)
+            if (physicsOn == true)
             {
                 if (LastLavaTime == -1) { LastLavaTime = tempPT; tempPON = true; }
                 if (LastLavaTime == 0) { LastLavaTime = 100; }
                 if (tempPT - LastLavaTime >= 45) { tempPON = true; LastLavaTime = tempPT; }
-                if (world.blockFlag == null) { world.blockFlag = new byte[50]; }
+                if (blockFlag == null) { blockFlag = new byte[50]; }
             }
             #endregion
             // just needed
-            world.blockFlag[8] = 0;
-            world.blockFlag[10] = 0;
+            blockFlag[8] = 0;
+            blockFlag[10] = 0;
             for (int iy = height - 1; iy >= 0; iy--)
             {
                 for (int iz = widthY - 1; iz >= 0; iz--)
@@ -866,12 +979,12 @@ namespace fCraft {
                         // Now we go over each and every block.
                         byte ib = GetBlock(ix, iz, iy);
                         #region LogiProc - WireWorld
-                        if (world.logicOn == true) switch (ib)
+                        if (logicOn == true) switch (ib)
                             {
                                 case 21: QueueUpdate(new BlockUpdate(null, ix, iz, iy, 34)); break;
                                 case 34: QueueUpdate(new BlockUpdate(null, ix, iz, iy, 23)); break;
                                 case 23: int i = LogiScan(ix, iz, iy, false);
-                                    if (world.logicOn3D == true)
+                                    if (logicOn3D == true)
                                     {
                                         i += LogiScan(ix, iz, iy - 1, true);
                                         i += LogiScan(ix, iz, iy + 1, true);
@@ -889,7 +1002,7 @@ namespace fCraft {
                                 default: break;
                             }
                         #endregion
-                        if ((world.physicsOn == true) && ((tempPON == true) || (ib != 10) || (world.blockFlag[ib] == 1)))
+                        if ((physicsOn == true) && ((tempPON == true) || (ib != 10) || (blockFlag[ib] == 1)))
                         {
                             byte tv = 255;
                             switch (ib)
@@ -909,7 +1022,7 @@ namespace fCraft {
                                             }
                                         }
                                     }
-                                    switch (world.modeWater)
+                                    switch (modeWater)
                                     {
                                         case 1:
                                             if (PlaceWater(ix, iz, iy - 1) && CheckSpongeXZ(ix,iz,iy-3)) { QueueUpdate(new BlockUpdate(null, ix, iz, iy - 1, ib)); }
@@ -958,7 +1071,7 @@ namespace fCraft {
                                 #endregion
                                 #region LogiProc - Lava
                                 case 10: // Wava!
-                                    switch (world.modeWater)
+                                    switch (modeWater)
                                     {
                                         case 1:
                                             if (PlaceWater(ix, iz, iy - 1)) { QueueUpdate(new BlockUpdate(null, ix, iz, iy - 1, ib)); }
@@ -1045,7 +1158,7 @@ namespace fCraft {
                                 #endregion
                             }
                                 #region LogiProc - finite physics
-                                if ((world.blockFlag[ib]&1) == 1)
+                                if ((blockFlag[ib]&1) == 1)
                                     {
                                         if (PlaceFPBlock(ix,iz,iy,ix,iz,iy-1,ib))
                                         {
@@ -1077,7 +1190,7 @@ namespace fCraft {
                                                         TNTExplode(ix+xstep, iz+ystep, iy - 1);
                                                     }
                                                 }
-                                                else if (((world.blockFlag[ib] & 2) > 0) && (rand.Next(0, 31) < ((world.blockFlag[ib] & 28) + 3)))
+                                                else if (((blockFlag[ib] & 2) > 0) && (rand.Next(0, 31) < ((blockFlag[ib] & 28) + 3)))
                                                 {
                                                     PlaceFPBlock(ix, iz, iy, ix + xstep, iz + ystep, iy, ib);
                                                 }
