@@ -30,7 +30,7 @@ namespace fCraftUI {
 
 
             if( Server.Init() ) {
-                Text = "fCraft " + Updater.GetVersionString() + " - " + Config.GetString( ConfigKey.ServerName );
+                Text = "fCraft " + Updater.GetVersionString() + " (asie's afCraft mod) - " + Config.GetString( ConfigKey.ServerName );
 
                 UpdaterResult update = Updater.CheckForUpdates();
                 if( update.UpdateAvailable ) {
