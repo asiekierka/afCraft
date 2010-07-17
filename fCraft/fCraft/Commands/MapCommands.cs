@@ -386,6 +386,17 @@ namespace fCraft {
                 player.Message( "\"" + name + "\" is not a valid zone name" );
                 return;
             }
+            Zone[] zones = player.world.map.ListZones();
+            if( zones.Length > 0 ) {
+                foreach (Zone zonel in zones)
+                {
+                    if (zonel.name == name)
+                    {
+                        player.Message("Zone '" + name + "' already exists!");
+                        return;
+                    }
+                }
+            }
             Zone zone = new Zone();
             zone.name = name;
 
